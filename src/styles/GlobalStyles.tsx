@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
 
     :root {
         --clr-primary: #018989;
-        --clr-primary-dark: #016262;
+        --clr-primary-dark: #017070;
         --clr-primary-rgba: rgba(1, 137, 137, 0.3);
         --clr-secondary: #2a2a2a;
         --clr-danger: #cc0000;
@@ -25,6 +25,8 @@ export const GlobalStyles = createGlobalStyle`
         
         --border-radius: 5px;
         --box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
+
+        --header-height: 60px;
     }
 
     html {
