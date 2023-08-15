@@ -1,8 +1,12 @@
 import React from "react";
-import { StyledHeader } from "./Header.styles";
+import { AppLogo, StyledHeader } from "./Header.styles";
 
 const Header: React.FC = () => {
-  return <StyledHeader>Header</StyledHeader>;
+  return (
+    <StyledHeader>
+      <AppLogo>job trackr</AppLogo>
+    </StyledHeader>
+  );
 };
 
 export default Header;
