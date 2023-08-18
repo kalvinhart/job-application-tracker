@@ -1,9 +1,10 @@
 import React from "react";
 import { Routes as RoutesList, Route } from "react-router-dom";
-import { LoginPage } from "../pages/LoginPage";
+import { LoginPage } from "../modules/auth/components/LoginPage";
 import { PageLayout } from "../layouts/PageLayout";
-import { Dashboard } from "../pages/Dashboard";
-import { MyJobs } from "../pages/MyJobs";
+import { Dashboard } from "../modules/dashboard/components/Dashboard";
+import { MyJobs } from "../modules/jobs/components/MyJobs";
+import ProtectedRoute from "./ProtectedRoute";
 
 const Routes: React.FC = () => {
   return (
@@ -13,16 +14,18 @@ const Routes: React.FC = () => {
         Component={LoginPage}
       />
 
-      <Route Component={PageLayout}>
-        <Route
-          path="/jobs"
-          Component={MyJobs}
-        />
+      <Route Component={ProtectedRoute}>
+        <Route Component={PageLayout}>
+          <Route
+            path="/jobs"
+            Component={MyJobs}
+          />
 
-        <Route
-          path="/"
-          Component={Dashboard}
-        />
+          <Route
+            path="/"
+            Component={Dashboard}
+          />
+        </Route>
       </Route>
     </RoutesList>
   );
