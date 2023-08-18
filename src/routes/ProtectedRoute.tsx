@@ -4,7 +4,6 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute: React.FC = () => {
   const { user } = useAuthState();
-  console.log(user);
 
   return user ? (
     <Outlet />
