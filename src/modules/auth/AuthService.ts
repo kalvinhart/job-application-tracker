@@ -12,10 +12,26 @@ export class AuthService {
   }
 
   async signIn(userCredentials: UserCredentials): Promise<SignInResponse> {
-    return await this._httpService.post<SignInResponse, UserCredentials>(`${this._apiRoot}/login`, userCredentials);
+    const response = await this._httpService.post<SignInResponse, UserCredentials>(
+      `${this._apiRoot}/login`,
+      userCredentials
+    );
+    this._httpService.setAuthToken(response.token);
+
+    return response;
   }
 
   async register(userCredentials: UserCredentials): Promise<SignInResponse> {
-    return await this._httpService.post<SignInResponse, UserCredentials>(`${this._apiRoot}/register`, userCredentials);
+    const response = await this._httpService.post<SignInResponse, UserCredentials>(
+      `${this._apiRoot}/register`,
+      userCredentials
+    );
+    this._httpService.setAuthToken(response.token);
+
+    return response;
+  }
+
+  signOut(): void {
+    this._httpService.setAuthToken(null);
   }
 }
