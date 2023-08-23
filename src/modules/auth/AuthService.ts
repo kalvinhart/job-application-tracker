@@ -14,4 +14,8 @@ export class AuthService {
   async signIn(userCredentials: UserCredentials): Promise<SignInResponse> {
     return await this._httpService.post<SignInResponse, UserCredentials>(`${this._apiRoot}/login`, userCredentials);
   }
+
+  async register(userCredentials: UserCredentials): Promise<SignInResponse> {
+    return await this._httpService.post<SignInResponse, UserCredentials>(`${this._apiRoot}/register`, userCredentials);
+  }
 }

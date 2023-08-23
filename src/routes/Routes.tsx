@@ -5,14 +5,24 @@ import { PageLayout } from "../layouts/PageLayout";
 import { Dashboard } from "../modules/dashboard/components/Dashboard";
 import { MyJobs } from "../modules/jobs/components/MyJobs";
 import ProtectedRoute from "./ProtectedRoute";
+import { LoginPanel } from "../modules/auth/components/LoginPanel";
+import { RegisterPanel } from "../modules/auth/components/RegisterPanel";
 
 const Routes: React.FC = () => {
   return (
     <RoutesList>
       <Route
-        path="/login"
-        Component={LoginPage}
-      />
+        path="/auth"
+        Component={LoginPage}>
+        <Route
+          path="/auth/login"
+          Component={LoginPanel}
+        />
+        <Route
+          path="/auth/register"
+          Component={RegisterPanel}
+        />
+      </Route>
 
       <Route Component={ProtectedRoute}>
         <Route Component={PageLayout}>

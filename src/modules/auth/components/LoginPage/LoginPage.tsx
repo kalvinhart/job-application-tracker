@@ -1,13 +1,13 @@
 import React from "react";
 import { LoginMain } from "./LoginPage.styles";
 import { WelcomePanel } from "../WelcomePanel";
-import { LoginPanel } from "../LoginPanel";
+import { Outlet } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   return (
     <LoginMain>
       <WelcomePanel />
-      <LoginPanel />
+      <Outlet />
     </LoginMain>
   );
 };

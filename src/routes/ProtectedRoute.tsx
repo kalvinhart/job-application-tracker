@@ -9,7 +9,7 @@ const ProtectedRoute: React.FC = () => {
     <Outlet />
   ) : (
     <Navigate
-      to="/login"
+      to="/auth/login"
       replace
     />
   );

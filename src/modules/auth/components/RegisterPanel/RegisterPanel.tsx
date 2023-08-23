@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useServices } from "../../../../common/context/ServicesContext";
 import { useAuthActions } from "../../../../common/hooks/useAuthActions";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AuthForm } from "../AuthForm";
-import { LoginPanelSection } from "./LoginPanel.styles";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "../../../../common/components/Button";
+import { Input } from "../../../../common/components/Input";
+import { InputErrorText } from "../../../../common/components/InputErrorText";
 import { InputGroup } from "../../../../common/components/InputGroup";
 import { Label } from "../../../../common/components/Label";
-import { Input } from "../../../../common/components/Input";
 import { H2, Span } from "../../../../styles/TypographyStyles";
-import { Button } from "../../../../common/components/Button";
-import { InputErrorText } from "../../../../common/components/InputErrorText";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { AuthForm } from "../AuthForm";
 import { AuthErrorTextContainer } from "../AuthForm/AuthForm.styles";
+import { RegisterPanelSection } from "./RegisterPanel.styles";
 
-type LoginFormInputs = {
+type RegisterFormInputs = {
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
-const LoginPanel: React.FC = () => {
+const RegisterPanel: React.FC = () => {
   const { authService, storageService } = useServices();
   const { setUser } = useAuthActions();
   const navigate = useNavigate();
@@ -30,17 +31,17 @@ const LoginPanel: React.FC = () => {
     handleSubmit,
     // reset,
     formState: { errors },
-  } = useForm<LoginFormInputs>();
+  } = useForm<RegisterFormInputs>();
 
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = async formData => {
+  const onSubmit: SubmitHandler<RegisterFormInputs> = async formData => {
     try {
       setLoading(true);
       setApiError("");
 
-      const signInResponse = await authService.signIn(formData);
+      const signInResponse = await authService.register(formData);
       storageService.setItem("user-token", signInResponse.token);
       setUser(signInResponse.user);
 
@@ -54,8 +55,11 @@ const LoginPanel: React.FC = () => {
     }
   };
 
+  const validateConfirmPasswordMatch = (value: string, formValues: RegisterFormInputs): boolean =>
+    value === formValues.password;
+
   return (
-    <LoginPanelSection>
+    <RegisterPanelSection>
       <H2>Welcome back! Sign in to your account</H2>
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
         {/* Email Input */}
@@ -86,6 +90,24 @@ const LoginPanel: React.FC = () => {
           {errors.password && <InputErrorText>A password is required</InputErrorText>}
         </InputGroup>
 
+        {/* Confirm Password Input */}
+        <InputGroup>
+          <Label
+            labelText="Confirm Password:"
+            htmlFor="confirmPassword"
+          />
+          <Input
+            id="confirmPassword"
+            type="password"
+            {...register("confirmPassword", {
+              required: { value: true, message: "Confirm your password" },
+              validate: (value, formValues) =>
+                validateConfirmPasswordMatch(value, formValues) || "Passwords do not match",
+            })}
+          />
+          {errors.confirmPassword && <InputErrorText>{errors.confirmPassword.message}</InputErrorText>}
+        </InputGroup>
+
         {apiError && (
           <AuthErrorTextContainer>
             <Span fontColor="var(--clr-danger)">{apiError}</Span>
@@ -102,15 +124,15 @@ const LoginPanel: React.FC = () => {
               spin
             />
           )}
-          Sign in
+          Register
         </Button>
       </AuthForm>
 
       <Span>
-        Don't have an account? <Link to="/auth/register">Register here</Link>
+        Already have an account? <Link to="/auth/login">Sign in here</Link>
       </Span>
-    </LoginPanelSection>
+    </RegisterPanelSection>
   );
 };
 
-export default LoginPanel;
+export default RegisterPanel;
