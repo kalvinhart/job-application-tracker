@@ -8,12 +8,17 @@ export const StyledButton = styled.button<ButtonProps>`
   border: none;
   color: var(--text-color-light);
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 
-  ${({ variant }): RuleSet<object> => {
-    switch (variant) {
+  ${({ $variant }): RuleSet<object> => {
+    switch ($variant) {
       case "primary":
         return css`
           background-color: var(--clr-primary);
+
+          &:hover {
+            background-color: var(--clr-primary-dark);
+          }
 
           &:disabled {
             background-color: var(--clr-primary-light);
@@ -22,6 +27,10 @@ export const StyledButton = styled.button<ButtonProps>`
       case "secondary":
         return css`
           background-color: var(--clr-secondary);
+
+          &:hover {
+            background-color: var(--clr-secondary-dark);
+          }
 
           &:disabled {
             background-color: var(--clr-secondary-light);
@@ -32,5 +41,9 @@ export const StyledButton = styled.button<ButtonProps>`
 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  & svg {
+    margin-right: 5px;
   }
 `;

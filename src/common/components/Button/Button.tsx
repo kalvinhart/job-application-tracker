@@ -2,14 +2,14 @@ import React, { ButtonHTMLAttributes } from "react";
 import { StyledButton } from "./Button.styles";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant: "primary" | "secondary";
+  $variant: "primary" | "secondary";
   children: React.ReactNode;
 };
 
-const Button: React.FC<ButtonProps> = ({ variant, children, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ $variant, children, ...props }) => {
   return (
     <StyledButton
-      variant={variant}
+      $variant={$variant}
       {...props}>
       {children}
     </StyledButton>

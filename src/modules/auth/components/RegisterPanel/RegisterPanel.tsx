@@ -110,12 +110,12 @@ const RegisterPanel: React.FC = () => {
 
         {apiError && (
           <AuthErrorTextContainer>
-            <Span fontColor="var(--clr-danger)">{apiError}</Span>
+            <Span $fontColor="var(--clr-danger)">{apiError}</Span>
           </AuthErrorTextContainer>
         )}
 
         <Button
-          variant="primary"
+          $variant="primary"
           type="submit"
           disabled={loading}>
           {loading && (

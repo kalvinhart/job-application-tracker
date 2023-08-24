@@ -6,7 +6,7 @@ const WelcomePanel: React.FC = () => {
   return (
     <WelcomePanelBackground>
       <H1>Job Application Tracker</H1>
-      <Span fontSize={20}>Track your job applications from one single location</Span>
+      <Span $fontSize={20}>Track your job applications from one single location</Span>
     </WelcomePanelBackground>
   );
 };

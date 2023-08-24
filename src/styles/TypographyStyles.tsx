@@ -17,13 +17,16 @@ export const H4 = styled.h4`
 `;
 
 type SpanProps = {
-  fontSize?: number;
-  fontColor?: string;
+  $fontSize?: number;
+  $fontColor?: string;
+  $bold?: boolean;
 };
 export const Span = styled.span<SpanProps>`
-  ${({ fontSize = 16, fontColor }): RuleSet<object> => css`
-    font-size: ${fontSize}px;
+  ${({ $fontSize = 16, $fontColor, $bold }): RuleSet<object> => css`
+    font-size: ${$fontSize}px;
 
-    ${fontColor && `color: ${fontColor};`}
+    ${$fontColor && `color: ${$fontColor};`}
+
+    ${$bold && "font-weight: bold;"}
   `}
 `;
