@@ -2,9 +2,11 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const NavigationDrawer = styled.div`
-  width: 250px;
+  width: var(--side-drawer-width);
   height: calc(100vh - var(--header-height));
-  padding: 20px;
+  position: fixed;
+  left: 0;
+  padding: 20px 0;
   background-color: var(--clr-primary);
   color: var(--clr-light);
 `;
@@ -27,7 +29,6 @@ export const NavButton = styled(NavLink)`
   width: 100%;
   padding: 10px 20px;
   background-color: var(--clr-primary);
-  border-radius: var(--border-radius);
 
   color: var(--clr-light);
   text-decoration: none;
@@ -43,7 +44,7 @@ export const NavButton = styled(NavLink)`
   }
 
   &.active {
-    background-color: var(--clr-primary-dark);
+    background-color: var(--clr-primary-light);
   }
 
   &:hover {
@@ -51,6 +52,7 @@ export const NavButton = styled(NavLink)`
   }
 
   & svg {
+    margin-right: 5px;
     color: var(--clr-light);
   }
 `;

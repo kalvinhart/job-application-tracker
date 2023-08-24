@@ -21,6 +21,7 @@ export const GlobalStyles = createGlobalStyle`
         --clr-bg: #fafafa;
         --clr-outline: #e1dfe3;
         --clr-light: #fcfcfc;
+        --clr-mid: #eee;
         --clr-dark: #c9c9c9;
 
         --text-color-light: #fafafa;
@@ -30,6 +31,7 @@ export const GlobalStyles = createGlobalStyle`
         --box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
 
         --header-height: 60px;
+        --side-drawer-width: 250px;
     }
 
     html {

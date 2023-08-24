@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 
 export const Main = styled.main`
-  padding: 20px;
+  width: 100%;
+  padding: 40px;
   display: flex;
   flex-direction: column;
 `;
