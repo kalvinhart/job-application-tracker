@@ -20,13 +20,16 @@ type SpanProps = {
   $fontSize?: number;
   $fontColor?: string;
   $bold?: boolean;
+  $marginBottom?: boolean;
 };
 export const Span = styled.span<SpanProps>`
-  ${({ $fontSize = 16, $fontColor, $bold }): RuleSet<object> => css`
+  ${({ $fontSize = 16, $fontColor, $bold, $marginBottom }): RuleSet<object> => css`
     font-size: ${$fontSize}px;
 
     ${$fontColor && `color: ${$fontColor};`}
 
     ${$bold && "font-weight: bold;"}
+
+    ${$marginBottom && "margin-bottom: 20px;"}
   `}
 `;

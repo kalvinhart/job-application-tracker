@@ -1,20 +1,23 @@
-import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes/Routes";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import ServicesProvider from "./common/context/ServicesContext";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { AuthProvider } from "./modules/auth/context/AuthContext";
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   return (
     <>
       <GlobalStyles />
       <ServicesProvider>
-        <Provider store={store}>
-          <BrowserRouter>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools />
             <Routes />
-          </BrowserRouter>
-        </Provider>
+          </QueryClientProvider>
+        </AuthProvider>
       </ServicesProvider>
     </>
   );

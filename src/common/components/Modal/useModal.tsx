@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect } from "react";
 
 type UseModalReturnType = {
   modalRef: React.MutableRefObject<HTMLDialogElement | null>;
@@ -6,14 +6,11 @@ type UseModalReturnType = {
 };
 export const useModal = (show: boolean, onClose: () => void): UseModalReturnType => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
-  const [showModal, setShowModal] = useState(show);
 
   const handleCloseModal = useCallback((): void => {
     if (onClose) {
       onClose();
     }
-
-    setShowModal(false);
   }, [onClose]);
 
   const handleKeyDown = useCallback(
@@ -26,17 +23,16 @@ export const useModal = (show: boolean, onClose: () => void): UseModalReturnType
   );
 
   useEffect(() => {
-    setShowModal(show);
-  }, [show]);
-
-  useEffect(() => {
     const modalElement = modalRef.current;
     if (!modalElement) return;
 
-    if (showModal) {
-      modalElement.showModal();
-    } else modalElement.close();
-  }, [showModal]);
+    if (show) {
+      modalElement.show();
+    } else {
+      console.log("closing");
+      modalElement.close();
+    }
+  }, [show]);
 
   return {
     modalRef,

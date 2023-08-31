@@ -1,27 +1,33 @@
-import { useState, useCallback, useEffect } from "react";
-import { useServices } from "../../../../common/context/ServicesContext";
+import { useState } from "react";
 import { Job } from "../../types/Job";
 import { usePageTitle } from "../../../../common/hooks/usePageTitle";
 import { appConfig } from "../../../../config/config";
+import { useJobs } from "../../hooks/useJobs";
+import { AxiosError } from "axios";
 
-export const useMyJobsPage = (): { loading: boolean; jobs: Job[] } => {
+type UseMyJobsPageReturnType = {
+  isLoading: boolean;
+  isError: boolean;
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  error: AxiosError<unknown, any> | null;
+  jobs: Job[] | undefined;
+  showModal: boolean;
+  handleShowModal: () => void;
+  handleCloseModal: () => void;
+};
+export const useMyJobsPage = (): UseMyJobsPageReturnType => {
   usePageTitle(`${appConfig.appName} - My Jobs`);
-  const { jobService } = useServices();
-  const [loading, setLoading] = useState(false);
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const { error, isError, isLoading, jobs } = useJobs();
 
-  const getJobs = useCallback(async (): Promise<void> => {
-    setLoading(true);
+  const [showModal, setShowModal] = useState(false);
 
-    const jobs = await jobService.getAllJobs();
-    setJobs(jobs);
+  const handleShowModal = (): void => {
+    setShowModal(true);
+  };
 
-    setLoading(false);
-  }, [jobService]);
+  const handleCloseModal = (): void => {
+    setShowModal(false);
+  };
 
-  useEffect(() => {
-    getJobs();
-  }, [getJobs]);
-
-  return { loading, jobs };
+  return { isLoading, isError, error, jobs, showModal, handleShowModal, handleCloseModal };
 };

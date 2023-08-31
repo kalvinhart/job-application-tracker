@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useServices } from "../../../../common/context/ServicesContext";
-import { useAuthActions } from "../../../../common/hooks/useAuthActions";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AuthForm } from "../AuthForm";
@@ -14,6 +13,9 @@ import { Button } from "../../../../common/components/Button";
 import { InputErrorText } from "../../../../common/components/InputErrorText";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { AuthErrorTextContainer } from "../AuthForm/AuthForm.styles";
+import { useAuth } from "../../context/AuthContext";
+import { AuthActionTypes } from "../../reducers/authReducer";
+import { StorageItems } from "../../../../common/enums/StorageItems";
 
 type LoginFormInputs = {
   email: string;
@@ -22,7 +24,7 @@ type LoginFormInputs = {
 
 const LoginPanel: React.FC = () => {
   const { authService, storageService } = useServices();
-  const { setUser } = useAuthActions();
+  const { authDispatch } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -41,8 +43,8 @@ const LoginPanel: React.FC = () => {
       setApiError("");
 
       const signInResponse = await authService.signIn(formData);
-      storageService.setItem("user-token", signInResponse.token);
-      setUser(signInResponse.user);
+      storageService.setItem(StorageItems.USER_TOKEN, signInResponse.token);
+      authDispatch({ type: AuthActionTypes.SET_USER, payload: signInResponse.user });
 
       navigate("/");
       /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

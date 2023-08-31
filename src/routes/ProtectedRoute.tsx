@@ -1,11 +1,11 @@
 import React from "react";
-import { useAuthState } from "../common/hooks/useAuthState";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../modules/auth/context/AuthContext";
 
 const ProtectedRoute: React.FC = () => {
-  const { user } = useAuthState();
+  const { authState } = useAuth();
 
-  return user ? (
+  return authState.user ? (
     <Outlet />
   ) : (
     <Navigate

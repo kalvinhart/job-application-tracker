@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes as RoutesList, Route } from "react-router-dom";
+import { Routes as RoutesList, Route, BrowserRouter } from "react-router-dom";
 import { LoginPage } from "../modules/auth/components/LoginPage";
 import { PageLayout } from "../layouts/PageLayout";
 import { Dashboard } from "../modules/dashboard/components/Dashboard";
@@ -10,34 +10,36 @@ import { MyJobsPage } from "../modules/jobs/components/MyJobsPage";
 
 const Routes: React.FC = () => {
   return (
-    <RoutesList>
-      <Route
-        path="/auth"
-        Component={LoginPage}>
+    <BrowserRouter>
+      <RoutesList>
         <Route
-          path="/auth/login"
-          Component={LoginPanel}
-        />
-        <Route
-          path="/auth/register"
-          Component={RegisterPanel}
-        />
-      </Route>
-
-      <Route Component={ProtectedRoute}>
-        <Route Component={PageLayout}>
+          path="/auth"
+          Component={LoginPage}>
           <Route
-            path="/jobs"
-            Component={MyJobsPage}
+            path="/auth/login"
+            Component={LoginPanel}
           />
-
           <Route
-            path="/"
-            Component={Dashboard}
+            path="/auth/register"
+            Component={RegisterPanel}
           />
         </Route>
-      </Route>
-    </RoutesList>
+
+        <Route Component={ProtectedRoute}>
+          <Route Component={PageLayout}>
+            <Route
+              path="/jobs"
+              Component={MyJobsPage}
+            />
+
+            <Route
+              path="/"
+              Component={Dashboard}
+            />
+          </Route>
+        </Route>
+      </RoutesList>
+    </BrowserRouter>
   );
 };
 

@@ -13,9 +13,9 @@ export class LocalStorageService extends StorageService {
 
   getItem<T>(key: string): T | null {
     const item = localStorage.getItem(key);
-
     if (!item) return null;
 
+    if (typeof item === "string") return item as T;
     return JSON.parse(item) as T;
   }
 }
