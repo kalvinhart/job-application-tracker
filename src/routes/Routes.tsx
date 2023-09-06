@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes as RoutesList, Route, BrowserRouter, createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage } from "../modules/auth/components/LoginPage";
 import { PageLayout } from "../layouts/PageLayout";
 import { Dashboard } from "../modules/dashboard/components/Dashboard";
@@ -47,40 +47,6 @@ const router = createBrowserRouter([
 
 const Routes: React.FC = () => {
   return <RouterProvider router={router} />;
-
-  return (
-    <BrowserRouter>
-      <RoutesList>
-        <Route
-          path="/auth"
-          Component={LoginPage}
-        >
-          <Route
-            path="/auth/login"
-            Component={LoginPanel}
-          />
-          <Route
-            path="/auth/register"
-            Component={RegisterPanel}
-          />
-        </Route>
-
-        <Route Component={ProtectedRoute}>
-          <Route Component={PageLayout}>
-            <Route
-              path="/jobs"
-              Component={MyJobsPage}
-            />
-
-            <Route
-              path="/"
-              Component={Dashboard}
-            />
-          </Route>
-        </Route>
-      </RoutesList>
-    </BrowserRouter>
-  );
 };
 
 export default Routes;
