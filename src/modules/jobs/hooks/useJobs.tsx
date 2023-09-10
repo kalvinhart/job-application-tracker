@@ -3,6 +3,7 @@ import { Job } from "../types/Job";
 import { useServices } from "../../../common/context/ServicesContext";
 import { appConfig } from "../../../config/config";
 import { AxiosError } from "axios";
+import { QueryKeys } from "../../../common/enums/QueryKeys";
 
 type Return = {
   isLoading: boolean;
@@ -16,7 +17,7 @@ export const useJobs = (): Return => {
   const { httpService } = useServices();
 
   const { isLoading, isError, error, data } = useQuery<Job[], AxiosError, Job[]>({
-    queryKey: ["jobs"],
+    queryKey: [QueryKeys.JOBS],
     queryFn: async () => await httpService.get<Job[]>(`${appConfig.apiUrl}/jobs`),
   });
 

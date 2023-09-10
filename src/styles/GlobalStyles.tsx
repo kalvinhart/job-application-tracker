@@ -30,7 +30,7 @@ export const GlobalStyles = createGlobalStyle`
         --border-radius: 5px;
         --box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
 
-        --header-height: 60px;
+        --header-height: 80px;
         --side-drawer-width: 250px;
     }
 

@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthProvider } from "./modules/auth/context/AuthContext";
 
+import "react-datepicker/dist/react-datepicker.css";
+
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {

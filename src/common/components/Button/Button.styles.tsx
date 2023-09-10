@@ -3,6 +3,9 @@ import { ButtonProps } from "./Button";
 
 export const StyledButton = styled.button<ButtonProps>`
   padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: var(--border-radius);
   outline: none;
   border: none;

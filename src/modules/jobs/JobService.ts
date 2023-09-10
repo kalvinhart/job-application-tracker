@@ -1,5 +1,6 @@
 import { HttpService } from "../../common/services/Http/HttpService";
 import { appConfig } from "../../config/config";
+import { CreateJob } from "./types/CreateJob";
 import { Job } from "./types/Job";
 
 export class JobService {
@@ -18,8 +19,8 @@ export class JobService {
     return await this._httpService.get<Job>(`${this.apiRoot}/${jobId}`);
   }
 
-  async createJob(job: Job): Promise<Job> {
-    return await this._httpService.post<Job, Job>(this.apiRoot, job);
+  async createJob(job: CreateJob): Promise<Job> {
+    return await this._httpService.post<Job, CreateJob>(this.apiRoot, job);
   }
 
   async updateJob(job: Job): Promise<Job> {
