@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "../../../../common/components/Card";
 import { JobsModal } from "../JobsModal";
+import { AxiosError } from "axios";
 
 const MyJobsPage: React.FC = () => {
   const { isLoading, isError, error, jobs, showModal, handleShowModal, handleCloseModal } = useMyJobsPage();
@@ -20,14 +21,16 @@ const MyJobsPage: React.FC = () => {
       <JobsHeader>
         <Span
           $fontSize={24}
-          $bold>
+          $bold
+        >
           My Jobs
         </Span>
 
         {jobs && jobs.length > 0 && (
           <Button
             $variant="primary"
-            onClick={handleShowModal}>
+            onClick={handleShowModal}
+          >
             <FontAwesomeIcon icon={faPlus} />
             Add Job
           </Button>
@@ -35,7 +38,7 @@ const MyJobsPage: React.FC = () => {
       </JobsHeader>
 
       <JobsContent>
-        {isError ? <span>{error?.message}</span> : <Card>{isLoading ? "Loading" : content}</Card>}
+        {isError ? <span>{(error as AxiosError).message}</span> : <Card>{isLoading ? "Loading" : content}</Card>}
       </JobsContent>
 
       <JobsModal

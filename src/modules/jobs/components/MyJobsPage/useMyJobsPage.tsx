@@ -3,13 +3,11 @@ import { Job } from "../../types/Job";
 import { usePageTitle } from "../../../../common/hooks/usePageTitle";
 import { appConfig } from "../../../../config/config";
 import { useJobs } from "../../hooks/useJobs";
-import { AxiosError } from "axios";
 
 type UseMyJobsPageReturnType = {
   isLoading: boolean;
   isError: boolean;
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  error: AxiosError<unknown, any> | null;
+  error: unknown;
   jobs: Job[] | undefined;
   showModal: boolean;
   handleShowModal: () => void;

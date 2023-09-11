@@ -1,24 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { Job } from "../types/Job";
 import { useServices } from "../../../common/context/ServicesContext";
-import { appConfig } from "../../../config/config";
-import { AxiosError } from "axios";
 import { QueryKeys } from "../../../common/enums/QueryKeys";
 
 type Return = {
   isLoading: boolean;
   isError: boolean;
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  error: AxiosError<unknown, any> | null;
+  error: unknown;
   jobs: Job[] | undefined;
 };
 
 export const useJobs = (): Return => {
-  const { httpService } = useServices();
+  const { jobService } = useServices();
 
-  const { isLoading, isError, error, data } = useQuery<Job[], AxiosError, Job[]>({
+  const { isLoading, isError, error, data } = useQuery({
     queryKey: [QueryKeys.JOBS],
-    queryFn: async () => await httpService.get<Job[]>(`${appConfig.apiUrl}/jobs`),
+    queryFn: async () => await jobService.getAllJobs(),
+    staleTime: Infinity,
   });
 
   return {

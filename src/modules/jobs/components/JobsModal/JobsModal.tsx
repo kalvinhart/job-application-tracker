@@ -20,7 +20,7 @@ import { QueryKeys } from "../../../../common/enums/QueryKeys";
 import { CreateJob } from "../../types/CreateJob";
 import { ApplicationStatus } from "../../enums/ApplicationStatus";
 
-import { JobButtonsWrapper, JobForm, JobModalContent } from "./JobsModal.styles";
+import { JobButtonsWrapper, JobForm, JobModalContent, JobSaveErrorWrapper } from "./JobsModal.styles";
 import { H2 } from "../../../../styles/TypographyStyles";
 import { DatePickerStyles } from "../../../../styles/DatePickerStyles";
 
@@ -47,16 +47,10 @@ const JobsModal: React.FC<JobsModalProps> = ({ show, onClose }) => {
   const { jobService } = useServices();
   const queryClient = useQueryClient();
 
-  const addJobMutation = useMutation({
+  const { mutateAsync: addJobMutation } = useMutation({
     mutationFn: (job: CreateJob) => jobService.createJob(job),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.JOBS] });
-      setLoading(false);
-      onClose();
-    },
-    onError: err => {
-      setSaveError("There was an error saving this job.");
-      console.log(err);
     },
   });
 
@@ -65,6 +59,7 @@ const JobsModal: React.FC<JobsModalProps> = ({ show, onClose }) => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<JobFormInputs>();
 
   const onSubmit: SubmitHandler<JobFormInputs> = async data => {
@@ -77,7 +72,20 @@ const JobsModal: React.FC<JobsModalProps> = ({ show, onClose }) => {
       user: authState.user?._id as string,
     };
 
-    addJobMutation.mutate(newJob);
+    try {
+      await addJobMutation(newJob);
+      closeModal();
+    } catch (error) {
+      setSaveError("There was an error saving this job.");
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const closeModal = (): void => {
+    reset();
+    onClose();
   };
 
   return (
@@ -218,7 +226,11 @@ const JobsModal: React.FC<JobsModalProps> = ({ show, onClose }) => {
             />
           </InputGroup>
 
-          {saveError && <InputErrorText>{saveError}</InputErrorText>}
+          {saveError && (
+            <JobSaveErrorWrapper>
+              <InputErrorText>{saveError}</InputErrorText>
+            </JobSaveErrorWrapper>
+          )}
 
           <JobButtonsWrapper>
             <Button
@@ -236,7 +248,7 @@ const JobsModal: React.FC<JobsModalProps> = ({ show, onClose }) => {
             <Button
               type="button"
               $variant="secondary"
-              onClick={onClose}
+              onClick={closeModal}
             >
               <FontAwesomeIcon icon={faTimes} />
               Cancel

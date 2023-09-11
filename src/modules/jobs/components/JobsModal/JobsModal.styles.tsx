@@ -10,6 +10,10 @@ export const JobForm = styled.form`
   flex-direction: column;
 `;
 
+export const JobSaveErrorWrapper = styled.div`
+  margin-bottom: 20px;
+`;
+
 export const JobButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
