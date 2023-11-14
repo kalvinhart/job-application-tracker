@@ -13,12 +13,11 @@ import { Label } from "../../../../common/components/Label";
 import { Span } from "../../../../styles/TypographyStyles";
 import { AuthForm } from "../AuthForm";
 import { AuthErrorTextContainer } from "../AuthForm/AuthForm.styles";
-import { StorageItems } from "../../../../common/enums/StorageItems";
 import { AuthActionTypes } from "../../reducers/authReducer";
 import { LoginFormInputs } from "../../types/LoginFormInputs";
 
 const LoginForm: React.FC = () => {
-  const { authService, storageService } = useServices();
+  const { authService } = useServices();
   const { authDispatch } = useAuth();
   const navigate = useNavigate();
 
@@ -36,9 +35,8 @@ const LoginForm: React.FC = () => {
       setLoading(true);
       setApiError("");
 
-      const signInResponse = await authService.signIn(formData);
-      storageService.setItem(StorageItems.USER_TOKEN, signInResponse.token);
-      authDispatch({ type: AuthActionTypes.SET_USER, payload: signInResponse.user });
+      const user = await authService.signIn(formData);
+      authDispatch({ type: AuthActionTypes.SET_USER, payload: user });
 
       navigate("/");
       /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

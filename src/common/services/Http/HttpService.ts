@@ -1,5 +1,4 @@
 export abstract class HttpService {
-  abstract setAuthToken(token: string | null): void;
   abstract get<TResponse>(url: string): Promise<TResponse>;
   abstract post<TResponse, TData>(url: string, postData: TData): Promise<TResponse>;
   abstract put<TResponse, TData>(url: string, putData: TData): Promise<TResponse>;

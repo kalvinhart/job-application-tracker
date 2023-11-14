@@ -7,13 +7,8 @@ export class AxiosHttpService extends HttpService {
   constructor() {
     super();
     this.axios = axios;
-  }
-
-  setAuthToken(token: string | null): void {
-    this.axios.interceptors.request.use(config => {
-      config.headers.Authorization = `Bearer ${token}`;
-      return config;
-    });
+    this.axios.defaults.withCredentials = true;
+    this.axios.defaults.baseURL = import.meta.env.VITE_API;
   }
 
   async get<TResponse>(url: string): Promise<TResponse> {

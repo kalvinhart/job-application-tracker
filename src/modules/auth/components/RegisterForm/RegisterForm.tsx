@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useServices } from "../../../../common/context/ServicesContext";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAuthActions } from "../../../../common/hooks/useAuthActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "../../../../common/components/Button";
@@ -14,10 +13,12 @@ import { Span } from "../../../../styles/TypographyStyles";
 import { AuthForm } from "../AuthForm";
 import { AuthErrorTextContainer } from "../AuthForm/AuthForm.styles";
 import { RegisterFormInputs } from "../../types/RegisterFormInputs";
+import { useAuth } from "../../context/AuthContext";
+import { AuthActionTypes } from "../../reducers/authReducer";
 
 const RegisterForm: React.FC = () => {
-  const { authService, storageService } = useServices();
-  const { setUser } = useAuthActions();
+  const { authService } = useServices();
+  const { authDispatch } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -34,9 +35,8 @@ const RegisterForm: React.FC = () => {
       setLoading(true);
       setApiError("");
 
-      const signInResponse = await authService.register(formData);
-      storageService.setItem("user-token", signInResponse.token);
-      setUser(signInResponse.user);
+      const user = await authService.register(formData);
+      authDispatch({ type: AuthActionTypes.SET_USER, payload: user });
 
       navigate("/");
       /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
