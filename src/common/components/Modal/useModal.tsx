@@ -29,7 +29,6 @@ export const useModal = (show: boolean, onClose: () => void): UseModalReturnType
     if (show) {
       modalElement.show();
     } else {
-      console.log("closing");
       modalElement.close();
     }
   }, [show]);
