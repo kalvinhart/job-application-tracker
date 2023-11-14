@@ -1,112 +1,15 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useServices } from "../../../../common/context/ServicesContext";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AuthForm } from "../AuthForm";
+import React from "react";
+import { Link } from "react-router-dom";
 import { LoginPanelSection } from "./LoginPanel.styles";
-import { InputGroup } from "../../../../common/components/InputGroup";
-import { Label } from "../../../../common/components/Label";
-import { Input } from "../../../../common/components/Input";
 import { H2, Span } from "../../../../styles/TypographyStyles";
-import { Button } from "../../../../common/components/Button";
-import { InputErrorText } from "../../../../common/components/InputErrorText";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { AuthErrorTextContainer } from "../AuthForm/AuthForm.styles";
-import { useAuth } from "../../context/AuthContext";
-import { AuthActionTypes } from "../../reducers/authReducer";
-import { StorageItems } from "../../../../common/enums/StorageItems";
-
-type LoginFormInputs = {
-  email: string;
-  password: string;
-};
+import { LoginForm } from "../LoginForm";
 
 const LoginPanel: React.FC = () => {
-  const { authService, storageService } = useServices();
-  const { authDispatch } = useAuth();
-  const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    // reset,
-    formState: { errors },
-  } = useForm<LoginFormInputs>();
-
-  const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState("");
-
-  const onSubmit: SubmitHandler<LoginFormInputs> = async formData => {
-    try {
-      setLoading(true);
-      setApiError("");
-
-      const signInResponse = await authService.signIn(formData);
-      storageService.setItem(StorageItems.USER_TOKEN, signInResponse.token);
-      authDispatch({ type: AuthActionTypes.SET_USER, payload: signInResponse.user });
-
-      navigate("/");
-      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    } catch (error: any) {
-      console.log(error);
-      setApiError(error.response.data.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <LoginPanelSection>
       <H2>Welcome back! Sign in to your account</H2>
-      <AuthForm onSubmit={handleSubmit(onSubmit)}>
-        {/* Email Input */}
-        <InputGroup>
-          <Label
-            labelText="Email:"
-            htmlFor="email"
-          />
-          <Input
-            id="email"
-            type="text"
-            {...register("email", { required: true })}
-          />
-          {errors.email && <InputErrorText>An email address is required</InputErrorText>}
-        </InputGroup>
 
-        {/* Password Input */}
-        <InputGroup>
-          <Label
-            labelText="Password:"
-            htmlFor="password"
-          />
-          <Input
-            id="password"
-            type="password"
-            {...register("password", { required: true })}
-          />
-          {errors.password && <InputErrorText>A password is required</InputErrorText>}
-        </InputGroup>
-
-        {apiError && (
-          <AuthErrorTextContainer>
-            <Span $fontColor="var(--clr-danger)">{apiError}</Span>
-          </AuthErrorTextContainer>
-        )}
-
-        <Button
-          $variant="primary"
-          type="submit"
-          disabled={loading}>
-          {loading && (
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-            />
-          )}
-          Sign in
-        </Button>
-      </AuthForm>
+      <LoginForm />
 
       <Span>
         Don't have an account? <Link to="/auth/register">Register here</Link>
