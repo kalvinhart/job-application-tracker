@@ -10,14 +10,19 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "../../../../common/components/Card";
 import { JobsModal } from "../JobsModal";
 import { AxiosError } from "axios";
+import { JobContentError } from "../JobContentError";
+import { Container } from "../../../../styles/CommonStyles";
 
 const MyJobsPage: React.FC = () => {
   const { isLoading, isError, error, jobs, showModal, handleShowModal, handleCloseModal } = useMyJobsPage();
 
-  const content = jobs && jobs.length > 0 ? <JobList jobs={jobs} /> : <NoJobs showModal={handleShowModal} />;
+  let content: JSX.Element;
+
+  if (isError) content = <JobContentError message={(error as AxiosError).message} />;
+  else content = jobs && jobs.length > 0 ? <JobList jobs={jobs} /> : <NoJobs showModal={handleShowModal} />;
 
   return (
-    <>
+    <Container>
       <JobsHeader>
         <Span
           $fontSize={24}
@@ -37,15 +42,13 @@ const MyJobsPage: React.FC = () => {
         )}
       </JobsHeader>
 
-      <JobsContent>
-        {isError ? <span>{(error as AxiosError).message}</span> : <Card>{isLoading ? "Loading" : content}</Card>}
-      </JobsContent>
+      <JobsContent>{isLoading ? <Card>Loading</Card> : content}</JobsContent>
 
       <JobsModal
         show={showModal}
         onClose={handleCloseModal}
       />
-    </>
+    </Container>
   );
 };
 

@@ -33,3 +33,18 @@ export const Span = styled.span<SpanProps>`
     ${$marginBottom && "margin-bottom: 20px;"}
   `}
 `;
+
+type SpanErrorProps = {
+  $fontSize?: number;
+  $bold?: boolean;
+  $marginBottom?: boolean;
+};
+export const SpanError = styled.span<SpanErrorProps>`
+  ${({ $fontSize = 16, $bold, $marginBottom }): RuleSet<object> => css`
+    font-size: ${$fontSize}px;
+
+    ${$bold && "font-weight: bold;"}
+
+    ${$marginBottom && "margin-bottom: 20px;"}
+  `}
+`;

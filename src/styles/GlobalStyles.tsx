@@ -1,4 +1,6 @@
 import { createGlobalStyle } from "styled-components";
+import { JobStatusLabelVariables } from "./variables/JobStatusLabelVariables";
+import { ColourVariables } from "./variables/ColourVariables";
 
 export const GlobalStyles = createGlobalStyle`
     *,
@@ -10,19 +12,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     :root {
-        --clr-primary: #018989;
-        --clr-primary-light: #34a1a1;
-        --clr-primary-dark: #016e6e;
-        --clr-primary-rgba: rgba(1, 137, 137, 0.3);
-        --clr-secondary: #18A1E0;
-        --clr-secondary-light: #46b4e6;
-        --clr-secondary-dark: #1381b3;
-        --clr-danger: #cc0000;
-        --clr-bg: #fafafa;
-        --clr-outline: #e1dfe3;
-        --clr-light: #fcfcfc;
-        --clr-mid: #eee;
-        --clr-dark: #c9c9c9;
+        ${ColourVariables}
 
         --text-color-light: #fafafa;
         --text-color-dark: #2a2a2a;
@@ -32,6 +22,8 @@ export const GlobalStyles = createGlobalStyle`
 
         --header-height: 80px;
         --side-drawer-width: 250px;
+
+        ${JobStatusLabelVariables}
     }
 
     html {
