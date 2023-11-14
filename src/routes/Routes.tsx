@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LoginPage } from "../modules/auth/components/LoginPage";
+import { AuthPage } from "../modules/auth/components/AuthPage";
 import { PageLayout } from "../layouts/PageLayout";
 import { Dashboard } from "../modules/dashboard/components/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
@@ -11,7 +11,7 @@ import { MyJobsPage } from "../modules/jobs/components/MyJobsPage";
 const router = createBrowserRouter([
   {
     path: "/auth",
-    element: <LoginPage />,
+    element: <AuthPage />,
     children: [
       {
         path: "/auth/login",

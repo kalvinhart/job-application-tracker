@@ -1,15 +1,15 @@
 import React from "react";
-import { LoginMain } from "./LoginPage.styles";
+import { AuthMain } from "./AuthPage.styles";
 import { WelcomePanel } from "../WelcomePanel";
 import { Outlet } from "react-router-dom";
 
-const LoginPage: React.FC = () => {
+const AuthPage: React.FC = () => {
   return (
-    <LoginMain>
+    <AuthMain>
       <WelcomePanel />
       <Outlet />
-    </LoginMain>
+    </AuthMain>
   );
 };
 
-export default LoginPage;
+export default AuthPage;
