@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { LoginPanel } from "../modules/auth/components/LoginPanel";
 import { RegisterPanel } from "../modules/auth/components/RegisterPanel";
 import { MyJobsPage } from "../modules/jobs/components/MyJobsPage";
+import { JobDetailsPage } from "../modules/job-details/components/JobDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
           {
             path: "/jobs",
             element: <MyJobsPage />,
+          },
+          {
+            path: "/job/:id",
+            element: <JobDetailsPage />,
           },
         ],
       },

@@ -20,7 +20,7 @@ const JobListItem: React.FC<JobListItemProps> = ({ job }) => {
       <JobDetails>
         <JobMainInfo>
           <JobTitleWrapper>
-            <LinkPrimary to={job._id}>
+            <LinkPrimary to={`/job/${job._id}`}>
               <Span
                 $fontSize={18}
                 $bold
