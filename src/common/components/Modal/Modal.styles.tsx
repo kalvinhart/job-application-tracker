@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { MediaSizes } from "../../../styles/MediaSizes";
 
 export const Dialog = styled.dialog`
   position: absolute;
@@ -12,6 +13,10 @@ export const Dialog = styled.dialog`
   background-color: white;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
+
+  @media only screen and (min-width: ${MediaSizes.medium}) {
+    max-width: 700px;
+  }
 
   ::backdrop {
     background-color: rgba(0, 0, 0, 0.2);

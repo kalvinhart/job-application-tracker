@@ -20,21 +20,17 @@ import { QueryKeys } from "../../../../common/enums/QueryKeys";
 import { CreateJob } from "../../types/CreateJob";
 import { ApplicationStatus } from "../../enums/ApplicationStatus";
 
-import { JobButtonsWrapper, JobForm, JobModalContent, JobSaveErrorWrapper } from "./JobsModal.styles";
+import {
+  JobButtonsWrapper,
+  JobForm,
+  JobFormGroup,
+  JobFormRow,
+  JobModalContent,
+  JobSaveErrorWrapper,
+} from "./JobsModal.styles";
 import { H2 } from "../../../../styles/TypographyStyles";
 import { DatePickerStyles } from "../../../../styles/DatePickerStyles";
-
-type JobFormInputs = {
-  title: string;
-  company: string;
-  location: string;
-  salaryMin: number;
-  contactName: string;
-  contactNumber: string;
-  contactEmail: string;
-  description: string;
-  dateApplied: Date;
-};
+import { JobFormInputs } from "../../types/JobFormInputs";
 
 type JobsModalProps = {
   show: boolean;
@@ -97,132 +93,138 @@ const JobsModal: React.FC<JobsModalProps> = ({ show, onClose }) => {
 
       <JobModalContent>
         <JobForm onSubmit={handleSubmit(onSubmit)}>
-          {/* Job Title */}
-          <InputGroup>
-            <Label
-              htmlFor="title"
-              labelText="Job Title:"
-            />
-            <Input
-              id="title"
-              {...register("title", { required: "A job title is required" })}
-              aria-invalid={errors.title ? "true" : "false"}
-            />
+          <JobFormRow>
+            <JobFormGroup>
+              {/* Job Title */}
+              <InputGroup>
+                <Label
+                  htmlFor="title"
+                  labelText="Job Title"
+                />
+                <Input
+                  id="title"
+                  {...register("title", { required: "A job title is required" })}
+                  aria-invalid={errors.title ? "true" : "false"}
+                />
 
-            {errors.title && <InputErrorText>{errors.title.message}</InputErrorText>}
-          </InputGroup>
+                {errors.title && <InputErrorText>{errors.title.message}</InputErrorText>}
+              </InputGroup>
 
-          {/* Company */}
-          <InputGroup>
-            <Label
-              htmlFor="company"
-              labelText="Company:"
-            />
-            <Input
-              id="company"
-              {...register("company", { required: "A company name is required" })}
-            />
+              {/* Company */}
+              <InputGroup>
+                <Label
+                  htmlFor="company"
+                  labelText="Company"
+                />
+                <Input
+                  id="company"
+                  {...register("company", { required: "A company name is required" })}
+                />
 
-            {errors.company && <InputErrorText>{errors.company.message}</InputErrorText>}
-          </InputGroup>
+                {errors.company && <InputErrorText>{errors.company.message}</InputErrorText>}
+              </InputGroup>
 
-          {/* Location */}
-          <InputGroup>
-            <Label
-              htmlFor="location"
-              labelText="Location:"
-            />
-            <Input
-              id="location"
-              {...register("location")}
-            />
-          </InputGroup>
+              {/* Location */}
+              <InputGroup>
+                <Label
+                  htmlFor="location"
+                  labelText="Location"
+                />
+                <Input
+                  id="location"
+                  {...register("location")}
+                />
+              </InputGroup>
 
-          {/* Salary Min */}
-          <InputGroup>
-            <Label
-              htmlFor="salaryMin"
-              labelText="Salary:"
-            />
-            <Input
-              id="salaryMin"
-              type="number"
-              step={500}
-              {...register("salaryMin", { valueAsNumber: true })}
-            />
-          </InputGroup>
+              {/* Salary Min */}
+              <InputGroup>
+                <Label
+                  htmlFor="salaryMin"
+                  labelText="Salary"
+                />
+                <Input
+                  id="salaryMin"
+                  type="number"
+                  step={500}
+                  {...register("salaryMin", { valueAsNumber: true })}
+                />
+              </InputGroup>
+            </JobFormGroup>
+
+            <JobFormGroup>
+              {/* Contact Name */}
+              <InputGroup>
+                <Label
+                  htmlFor="contactName"
+                  labelText="Contact Name"
+                />
+                <Input
+                  id="contactName"
+                  {...register("contactName")}
+                />
+              </InputGroup>
+
+              {/* Contact Number */}
+              <InputGroup>
+                <Label
+                  htmlFor="contactNumber"
+                  labelText="Contact Number"
+                />
+                <Input
+                  id="contactNumber"
+                  {...register("contactNumber")}
+                />
+              </InputGroup>
+
+              {/* Contact Email */}
+              <InputGroup>
+                <Label
+                  htmlFor="contactEmail"
+                  labelText="Contact Email"
+                />
+                <Input
+                  id="contactEmail"
+                  {...register("contactEmail")}
+                />
+              </InputGroup>
+
+              {/* Date Applied */}
+              <InputGroup>
+                <Label
+                  htmlFor="dateApplied"
+                  labelText="Date Applied"
+                />
+                <Controller
+                  control={control}
+                  name="dateApplied"
+                  rules={{ required: "A date is required" }}
+                  render={({ field }): JSX.Element => (
+                    <DatePickerStyles>
+                      <DatePicker
+                        isClearable
+                        placeholderText="Select date"
+                        onChange={(date): void => field.onChange(date ? new Date(date) : date)}
+                        selected={field.value}
+                        filterDate={(date): boolean => new Date() > date}
+                      />
+                      {errors.dateApplied && <InputErrorText>{errors.dateApplied.message}</InputErrorText>}
+                    </DatePickerStyles>
+                  )}
+                />
+              </InputGroup>
+            </JobFormGroup>
+          </JobFormRow>
 
           {/* Job Description */}
           <InputGroup>
             <Label
               htmlFor="description"
-              labelText="Job Description:"
+              labelText="Job Description"
             />
             <TextArea
               id="description"
               rows={8}
               {...register("description")}
-            />
-          </InputGroup>
-
-          {/* Contact Name */}
-          <InputGroup>
-            <Label
-              htmlFor="contactName"
-              labelText="Contact Name:"
-            />
-            <Input
-              id="contactName"
-              {...register("contactName")}
-            />
-          </InputGroup>
-
-          {/* Contact Number */}
-          <InputGroup>
-            <Label
-              htmlFor="contactNumber"
-              labelText="Contact Number:"
-            />
-            <Input
-              id="contactNumber"
-              {...register("contactNumber")}
-            />
-          </InputGroup>
-
-          {/* Contact Email */}
-          <InputGroup>
-            <Label
-              htmlFor="contactEmail"
-              labelText="Contact Email:"
-            />
-            <Input
-              id="contactEmail"
-              {...register("contactEmail")}
-            />
-          </InputGroup>
-
-          {/* Date Applied */}
-          <InputGroup>
-            <Label
-              htmlFor="dateApplied"
-              labelText="Date Applied:"
-            />
-            <Controller
-              control={control}
-              name="dateApplied"
-              rules={{ required: "A date is required" }}
-              render={({ field }): JSX.Element => (
-                <DatePickerStyles>
-                  <DatePicker
-                    isClearable
-                    placeholderText="Select date"
-                    onChange={(date): void => field.onChange(date ? new Date(date) : date)}
-                    selected={field.value}
-                    filterDate={(date): boolean => new Date() > date}
-                  />
-                  {errors.dateApplied && <InputErrorText>{errors.dateApplied.message}</InputErrorText>}
-                </DatePickerStyles>
-              )}
             />
           </InputGroup>
 
