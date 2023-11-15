@@ -11,6 +11,12 @@ export const DatePickerStyles = styled.div`
     padding: 10px 20px;
     border: 1px solid var(--clr-outline);
     border-radius: var(--border-radius);
+    outline: none;
+    transition: border 0.2s ease-in-out;
+
+    &:focus {
+      border: 1px solid var(--clr-primary);
+    }
   }
 
   .react-datepicker__close-icon::after {
@@ -23,5 +29,19 @@ export const DatePickerStyles = styled.div`
     text-align: unset;
     background-color: var(--clr-primary);
     font-size: 14px;
+  }
+
+  .react-datepicker__header,
+  .react-datepicker__today-button {
+    background-color: var(--clr-primary);
+  }
+
+  .react-datepicker__current-month,
+  .react-datepicker__day-name {
+    color: white;
+  }
+
+  .react-datepicker__today-button {
+    color: white;
   }
 `;

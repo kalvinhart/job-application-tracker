@@ -206,6 +206,8 @@ const JobsModal: React.FC<JobsModalProps> = ({ show, onClose }) => {
                         onChange={(date): void => field.onChange(date ? new Date(date) : date)}
                         selected={field.value}
                         filterDate={(date): boolean => new Date() > date}
+                        todayButton="Today"
+                        dateFormat="dd/MM/yyyy"
                       />
                       {errors.dateApplied && <InputErrorText>{errors.dateApplied.message}</InputErrorText>}
                     </DatePickerStyles>
