@@ -1,28 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useServices } from "../../../../common/context/ServicesContext";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "../../../../common/components/Button";
-import { Input } from "../../../../common/components/Input";
-import { InputErrorText } from "../../../../common/components/InputErrorText";
 import { InputGroup } from "../../../../common/components/InputGroup";
-import { Label } from "../../../../common/components/Label";
-import { Span } from "../../../../styles/TypographyStyles";
 import { AuthForm } from "../AuthForm";
-import { AuthErrorTextContainer } from "../AuthForm/AuthForm.styles";
 import { AuthActionTypes } from "../../reducers/authReducer";
 import { LoginFormInputs } from "../../types/LoginFormInputs";
+import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 
 const LoginForm: React.FC = () => {
+  const theme = useTheme();
   const { authService } = useServices();
   const { authDispatch } = useAuth();
   const navigate = useNavigate();
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();
@@ -52,45 +48,61 @@ const LoginForm: React.FC = () => {
     <AuthForm onSubmit={handleSubmit(onSubmit)}>
       {/* Email Input */}
       <InputGroup>
-        <Label
-          labelText="Email:"
-          htmlFor="email"
+        <Controller
+          name="email"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }): JSX.Element => (
+            <TextField
+              variant="standard"
+              label="Email"
+              error={errors.email !== undefined}
+              helperText={errors.email ? "An email address is required" : ""}
+              {...field}
+            />
+          )}
         />
-        <Input
-          id="email"
-          type="text"
-          {...register("email", { required: true })}
-        />
-        {errors.email && <InputErrorText>An email address is required</InputErrorText>}
       </InputGroup>
 
       {/* Password Input */}
       <InputGroup>
-        <Label
-          labelText="Password:"
-          htmlFor="password"
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }): JSX.Element => (
+            <TextField
+              type="password"
+              variant="standard"
+              label="Password"
+              error={errors.password !== undefined}
+              helperText={errors.password ? "A password is required" : ""}
+              {...field}
+            />
+          )}
         />
-        <Input
-          id="password"
-          type="password"
-          {...register("password", { required: true })}
-        />
-        {errors.password && <InputErrorText>A password is required</InputErrorText>}
       </InputGroup>
 
       {apiError && (
-        <AuthErrorTextContainer>
-          <Span $fontColor="var(--clr-danger)">{apiError}</Span>
-        </AuthErrorTextContainer>
+        <Box marginBottom={20}>
+          <Typography
+            component="span"
+            sx={{ color: theme.palette.error.main }}
+          >
+            {apiError}
+          </Typography>
+        </Box>
       )}
 
       <Button
-        $variant="primary"
+        variant="contained"
         type="submit"
         disabled={loading}
+        sx={{ marginTop: "20px" }}
       >
         {loading && (
           <FontAwesomeIcon
+            style={{ marginRight: "5px" }}
             icon={faSpinner}
             spin
           />

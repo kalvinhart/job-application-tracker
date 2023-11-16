@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, forwardRef } from "react";
+import { InputHTMLAttributes, forwardRef } from "react";
 import { StyledInput } from "./Input.styles";
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {};

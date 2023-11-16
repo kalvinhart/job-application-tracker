@@ -1,13 +1,30 @@
 import React from "react";
-import { WelcomePanelBackground } from "./WelcomePanel.styles";
-import { H1, Span } from "../../../../styles/TypographyStyles";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const WelcomePanel: React.FC = () => {
+  const theme = useTheme();
+
   return (
-    <WelcomePanelBackground>
-      <H1>Job Application Tracker</H1>
-      <Span $fontSize={20}>Track your job applications from one single location</Span>
-    </WelcomePanelBackground>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      width="50%"
+      height="100vh"
+      padding="40px"
+      bgcolor={theme.palette.primary.main}
+    >
+      <Typography
+        variant="h1"
+        color={theme.palette.common.white}
+      >
+        Job Application Tracker
+      </Typography>
+      <Typography sx={{ fontSize: "20px", color: theme.palette.common.white }}>
+        Track your job applications from one single location
+      </Typography>
+    </Box>
   );
 };
 

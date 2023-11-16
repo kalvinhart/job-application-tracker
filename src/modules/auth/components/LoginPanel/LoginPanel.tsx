@@ -1,20 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { LoginPanelSection } from "./LoginPanel.styles";
-import { H2, Span } from "../../../../styles/TypographyStyles";
+import { Box, Typography } from "@mui/material";
 import { LoginForm } from "../LoginForm";
 
 const LoginPanel: React.FC = () => {
   return (
-    <LoginPanelSection>
-      <H2>Welcome back! Sign in to your account</H2>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      width="50%"
+      height="100vh"
+      padding="40px"
+    >
+      <Typography
+        component="span"
+        fontSize={22}
+        marginBottom="20px"
+      >
+        Welcome back! Sign in to your account
+      </Typography>
 
       <LoginForm />
 
-      <Span>
+      <Typography component="span">
         Don't have an account? <Link to="/auth/register">Register here</Link>
-      </Span>
-    </LoginPanelSection>
+      </Typography>
+    </Box>
   );
 };
 

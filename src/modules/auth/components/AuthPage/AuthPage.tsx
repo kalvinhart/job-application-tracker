@@ -1,14 +1,17 @@
 import React from "react";
-import { AuthMain } from "./AuthPage.styles";
+import { Box } from "@mui/material";
 import { WelcomePanel } from "../WelcomePanel";
 import { Outlet } from "react-router-dom";
 
 const AuthPage: React.FC = () => {
   return (
-    <AuthMain>
+    <Box
+      component="main"
+      display="flex"
+    >
       <WelcomePanel />
       <Outlet />
-    </AuthMain>
+    </Box>
   );
 };
 
