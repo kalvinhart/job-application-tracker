@@ -1,5 +1,16 @@
 {
-  "extends": ["react-app", "plugin:prettier/recommended", "plugin:@tanstack/eslint-plugin-query/recommended"],
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest/globals": true
+  },
+  "plugins": ["jest"],
+  "extends": [
+    "react-app",
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
+  ],
   "rules": {
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/explicit-function-return-type": "error",
